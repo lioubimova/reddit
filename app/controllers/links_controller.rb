@@ -3,13 +3,22 @@ class LinksController < ApplicationController
 
   # GET /links
   # GET /links.json
-  def index
-    @links = Link.all
-  end
+
+
+
+
+
+def index
+
+  @link = Link.sort_by_votes
+
+end
 
   # GET /links/1
   # GET /links/1.json
   def show
+
+
   end
 
   # GET /links/new
@@ -37,6 +46,7 @@ class LinksController < ApplicationController
     end
   end
 
+
   # PATCH/PUT /links/1
   # PATCH/PUT /links/1.json
   def update
@@ -61,14 +71,24 @@ class LinksController < ApplicationController
     end
   end
 
+  def upvote
+    @link = Link.find(params[:id])
+
+    @link.votes.create
+    redirect_to(links_path)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_link
       @link = Link.find(params[:id])
+
+
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def link_params
       params.require(:link).permit(:URL, :title)
     end
-end
+
+  end

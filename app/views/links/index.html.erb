@@ -1,29 +1,47 @@
+<div class="container">
 <p id="notice"><%= notice %></p>
+
 
 <h1>Listing Links</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th>Url</th>
+
+      <th>Votes</th>
+      <th>add Vote</th>
       <th>Title</th>
+
+
+
       <th colspan="3"></th>
+
+
     </tr>
   </thead>
 
   <tbody>
     <% @links.each do |link| %>
       <tr>
-        <td><%= link.URL %></td>
-        <td><%= link.title %></td>
-        <td><%= link_to 'Show', link %></td>
+
+
+        <td><%= pluralize(link.votes.count, "vote") %></td>
+        <td><%= button_to '+1', upvote_link_path(link), method: :post %></td>
+
+        <td><%= link_to link.title,link.URL %></td>
+
+        <td><%= link_to 'Show URL', link %></td>
         <td><%= link_to 'Edit', edit_link_path(link) %></td>
         <td><%= link_to 'Destroy', link, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+
       </tr>
     <% end %>
+
   </tbody>
 </table>
 
 <br>
 
 <%= link_to 'New Link', new_link_path %>
+
+</div>
