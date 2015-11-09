@@ -1,5 +1,7 @@
 class LinksController < ApplicationController
-  before_action :set_link, only: [:show, :edit, :update, :destroy]
+
+  before_action :set_link, only: [:show, :create_vote, :edit, :update, :destroy]
+
 
   # GET /links
   # GET /links.json
@@ -17,8 +19,7 @@ end
   # GET /links/1
   # GET /links/1.json
   def show
-
-
+    
   end
 
   # GET /links/new
@@ -74,14 +75,17 @@ end
   def upvote
     @link = Link.find(params[:id])
 
-    @link.votes.create
-    redirect_to(links_path)
-  end
+     @link.votes.create
+       redirect_to (links_path)
+
+end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_link
       @link = Link.find(params[:id])
+
 
 
     end

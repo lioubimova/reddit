@@ -21,14 +21,14 @@
   </thead>
 
   <tbody>
-    <% @links.each do |link| %>
+    <% @link.each do|link| %>
       <tr>
 
 
         <td><%= pluralize(link.votes.count, "vote") %></td>
         <td><%= button_to '+1', upvote_link_path(link), method: :post %></td>
 
-        <td><%= link_to link.title,link.URL %></td>
+        <td><%= link_to link.title, link.URL %></td>
 
         <td><%= link_to 'Show URL', link %></td>
         <td><%= link_to 'Edit', edit_link_path(link) %></td>
