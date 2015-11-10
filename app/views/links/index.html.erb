@@ -1,47 +1,16 @@
-<div class="container">
-<p id="notice"><%= notice %></p>
-
-
-<h1>Listing Links</h1>
-
-<table class="table">
-  <thead>
-    <tr>
-
-      <th>Votes</th>
-      <th>add Vote</th>
-      <th>Title</th>
-
-
-
-      <th colspan="3"></th>
-
-
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @link.each do|link| %>
-      <tr>
-
-
-        <td><%= pluralize(link.votes.count, "vote") %></td>
-        <td><%= button_to '+1', upvote_link_path(link), method: :post %></td>
-
-        <td><%= link_to link.title, link.URL %></td>
-
-        <td><%= link_to 'Show URL', link %></td>
-        <td><%= link_to 'Edit', edit_link_path(link) %></td>
-        <td><%= link_to 'Destroy', link, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-
-      </tr>
-    <% end %>
-
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Link', new_link_path %>
 
 </div>
+<% @links.each do |link| %>
+  <div class="row">
+    <div class="col-xs-3">
+      <%= button_to "+1", link_votes_path(link), :class => "btn btn-primary" %>
+      <h6><%= link.votes.sum(:value) %></h6>
+      <%= button_to "-1", link_votes_path(link, :downvote => true), :class => "btn btn-primary" %>
+    </div>
+    <div class="col-xs-9">
+      <h3><%= link_to link.title, click_link_path(link) %></h3>
+      <%= simple_format(link.summary) %>
+      <p class="meta"><%= link_to "Edit this link", edit_link_path(link) %></p>
+    </div>
+  </div>
+<% end %>

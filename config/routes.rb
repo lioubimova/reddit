@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
-  resources :votes
   resources :links do
     member do
-      post 'upvote'
+      get 'click'
     end
+    resources :votes, :only => [:create]
   end
 
 

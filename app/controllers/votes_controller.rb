@@ -24,18 +24,16 @@ class VotesController < ApplicationController
   # POST /votes
   # POST /votes.json
   def create
-    @vote = Vote.new(vote_params)
 
-    respond_to do |format|
-      if @vote.save
-        format.html { redirect_to @vote, notice: 'Vote was successfully created.' }
-        format.json { render :show, status: :created, location: @vote }
-      else
-        format.html { render :new }
-        format.json { render json: @vote.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+     @link = Link.find(params[:link_id])
+     if params[:downvote]
+       @link.votes.create(value: -1)
+     else
+       @link.votes.create
+     end
+     redirect_to root_url
+   end
+end
 
   # PATCH/PUT /votes/1
   # PATCH/PUT /votes/1.json

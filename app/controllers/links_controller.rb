@@ -12,14 +12,14 @@ class LinksController < ApplicationController
 
 def index
 
-  @link = Link.sort_by_votes
+  @links = Link.all.sort_by{|link| link.votes.sum(:value)}.reverse
 
 end
 
   # GET /links/1
   # GET /links/1.json
   def show
-    
+
   end
 
   # GET /links/new
@@ -34,18 +34,14 @@ end
   # POST /links
   # POST /links.json
   def create
-    @link = Link.new(link_params)
+   @link = Link.new(link_params)
+   if @link.save
+     redirect_to root_path
+   else
+     render "new"
+   end
+ end
 
-    respond_to do |format|
-      if @link.save
-        format.html { redirect_to @link, notice: 'Link was successfully created.' }
-        format.json { render :show, status: :created, location: @link }
-      else
-        format.html { render :new }
-        format.json { render json: @link.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
 
   # PATCH/PUT /links/1
@@ -74,9 +70,15 @@ end
 
   def upvote
     @link = Link.find(params[:id])
-
-     @link.votes.create
+    @link.votes.create
        redirect_to (links_path)
+
+end
+
+def click
+@link = Link.find(params[:id])
+@link.votes.create
+redirect_to @link.URL
 
 end
 
@@ -92,7 +94,7 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def link_params
-      params.require(:link).permit(:URL, :title)
+      params.require(:link).permit(:URL, :title, :summary)
     end
 
   end
